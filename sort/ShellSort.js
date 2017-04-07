@@ -2,33 +2,28 @@
 * @Author: Zervanto
 * @Date:   2017-04-06 10:38:52
 * @Last Modified by:   Zervanto
-* @Last Modified time: 2017-04-06 23:38:21
+* @Last Modified time: 2017-04-07 16:18:19
 */
 
 'use strict';
-function shellSort(arr){
-    if(arr.length == 0){
-        return ;
+function shellSort(arr) {
+    var len = arr.length,
+        temp,
+        gap = 1;
+    console.time('希尔排序耗时:');
+    while(gap < len/5) {          //动态定义间隔序列
+        gap =gap*5+1;
     }
-    var d = arr.length/2;
-    while(d>=1){
-        shellInsert(arr,d);
-        d/=2;
-    }
-    return arr;
-}
-function shellInsert(arr,d){
-    for(var i=d;i<arr.length;i++){
-        var j = i-d;
-        var temp =arr[i];
-        while(j>=0&&arr[j]>temp){
-            arr[j+d] = arr[j];
-            j-=d;
-        }
-        if(j!=i-d){
-            arr[j+d]=temp;
+    for (gap; gap > 0; gap = Math.floor(gap/5)) {
+        for (var i = gap; i < len; i++) {
+            temp = arr[i];
+            for (var j = i-gap; j >= 0 && arr[j] > temp; j-=gap) {
+                arr[j+gap] = arr[j];
+            }
+            arr[j+gap] = temp;
         }
     }
+    console.timeEnd('希尔排序耗时:');
     return arr;
 }
 var a = [];
